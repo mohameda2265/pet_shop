@@ -3,7 +3,6 @@ from rest_framework import serializers
 
 
 class PetItemSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = PetItem
         fields = '__all__'

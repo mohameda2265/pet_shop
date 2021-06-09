@@ -56,3 +56,5 @@ To render coverage test as html page:
 coverage html
 ```
 Open `'Project_Dir'/html/index.html` then filter by app_name `pet`.
+
+Import postman_collection from `'Project_Dir'/Pet Shop APIs.postman_collection.json` to Postman to make it easier to test APIs.

@@ -32,3 +32,9 @@ class PetSerializer(serializers.ModelSerializer):
                 else:
                     return serializers.ValidationError(pet_item_serializer.errors)
         return pet
+
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItem
+        fields = '__all__'

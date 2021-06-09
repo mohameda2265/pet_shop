@@ -33,18 +33,23 @@ Migrate the tables:
 ```sh
 python manage.py migrate
 ```
-Create a superuser:
+Create a superuser to view data from django admin panel:
 
 ```sh
 python manage.py createsuperuser
-```
-Load the fixtures(database dumps) into database:
-
-```sh
-python manage.py loaddata db.json
 ```
 Finally, runserver:
 
 ```sh
 python manage.py runserver
+```
+To run coverage test:
+
+```sh
+coverage run  manage.py test pet
+```
+To render coverage test as html:
+
+```sh
+coverage html
 ```

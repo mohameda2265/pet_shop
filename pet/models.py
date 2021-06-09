@@ -57,8 +57,7 @@ class OrderItem(models.Model):
     Second reason if I update the price the old orders would be changed and its wrong too.
     """
     pet_name = models.CharField(max_length=254, blank=True, null=True)
-    slug = models.CharField(max_length=254, blank=True, null=True)
-    price = models.CharField(max_length=254, blank=True, null=True)
+    price = models.FloatField(default=0.0)
     currency = models.CharField(max_length=20)
     quantity = models.IntegerField()
 
@@ -68,7 +67,11 @@ class OrderItem(models.Model):
 
 
 class Order(models.Model):
+    # I didn't add the total price attr. because of different currencies
     items = models.ManyToManyField(OrderItem, related_name='items_order')
-    total_price = models.FloatField(max_length=254)
     payment_method = models.CharField(max_length=10, choices=PAYMENT_METHOD, default='COD')
     created_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        # name appears in admin panel
+        return self.payment_method

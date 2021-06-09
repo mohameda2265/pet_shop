@@ -1,0 +1,225 @@
+{
+	"info": {
+		"_postman_id": "e4fc8673-8f60-4c0f-960e-53838124db4d",
+		"name": "Pet Shop APIs",
+		"description": "Pet Shop APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Pets",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/pet/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"pet",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a Pet",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test pet\",\r\n    \"rarity\": 4,\r\n    \"quantity\": 50,\r\n    \"items\": [\r\n        {\r\n            \"price\": 300,\r\n            \"currency\": \"Dollar\"\r\n        },\r\n        {\r\n            \"price\": 4500,\r\n            \"currency\": \"EGP\"\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/pet/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"pet",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create an Order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orders\": [\r\n        {\r\n            \"pet_item_id\": 2,\r\n            \"quantity\": 1\r\n        },\r\n        {\r\n            \"pet_item_id\": 1,\r\n            \"quantity\": 120\r\n        },\r\n        {\r\n            \"pet_item_id\": 3,\r\n            \"quantity\": 101\r\n        }\r\n    ],\r\n    \"payment_method\": \"COD\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/pet/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"pet",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Pet data",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test pett\",\r\n    \"rarity\": 3,\r\n    \"quantity\": 20\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/pet/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"pet",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Pet",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/pet/62",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"pet",
+						"62"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Pet item",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"price\": 150,\r\n    \"currency\": \"Dollar\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/pet/item/29",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"pet",
+						"item",
+						"29"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Pet item",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/pet/item/29",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"pet",
+						"item",
+						"29"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

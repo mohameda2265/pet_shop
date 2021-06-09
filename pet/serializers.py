@@ -29,8 +29,6 @@ class PetSerializer(serializers.ModelSerializer):
                 pet_item_serializer = PetItemSerializer(data=items, many=True)
                 if pet_item_serializer.is_valid():
                     pet_item_serializer.save()
-                else:
-                    return serializers.ValidationError(pet_item_serializer.errors)
         return pet
 
 

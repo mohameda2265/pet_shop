@@ -24,7 +24,20 @@ class PetsAPI(APIView):
             })
         return request_data
 
-    def validate_pet_data(self, request_data):
+    def get_pet_data_object(self, request):
+        request_data = {
+            'name': request.data.get('name', None),
+            'rarity': request.data.get('rarity', None),
+            'quantity': request.data.get('quantity', None),
+        }
+        return request_data
+
+    def validate_update_pet_data(self, request_data):
+        return all([request_data.get('name', None),
+                    request_data.get('rarity', None),
+                    request_data.get('quantity', None)])
+
+    def validate_create_pet_data(self, request_data):
         list_items = []
         if request_data.get('items', None):
             for item in request_data.get('items', None):
@@ -49,7 +62,7 @@ class PetsAPI(APIView):
 
         request_data = self.get_pet_object(request)
         # first way with serializer:
-        if self.validate_pet_data(request_data):
+        if self.validate_create_pet_data(request_data):
             pet_serializer = PetSerializer(data=request_data, context={'items': request_data.get('items', [])})
             if pet_serializer.is_valid():
                 pet_serializer.save()
@@ -59,11 +72,39 @@ class PetsAPI(APIView):
 
         return Response({'response': 'error data'}, status=HTTP_400_BAD_REQUEST)
 
+        # second step with create an object:
+
+        # pet = Pet()
+        # pet.name = request_data['name']
+        # pet.quantity = request_data['quantity']
+        # pet.rarity = request_data['rarity']
+        # pet.save()
+        # for item in request_data['items']:
+        #     pet_item = PetItem()
+        #     pet_item.pet = pet.id
+        #     pet_item.price = item['price']
+        #     pet_item.currency = item['currency']
+        #     pet_item.save()
+
+        # third way to use function create
+
+        # pet = Pet.objects.create(
+        #     name=request_data['name'],
+        #     quantity=request_data['quantity'],
+        #     rarity=request_data['rarity']
+        # )
+        # for item in request_data['items']:
+        #     PetItem.objects.create(
+        #         pet=pet.id,
+        #         price=item['price'],
+        #         currency=item['currency']
+        #     )
+
     def put(self, request, pet_id):
         try:
-            request_data = self.get_pet_object(request)
-            if self.validate_pet_data(request_data):
-                pet = Pet.objects.get(id=pet_id)
+            request_data = self.get_pet_data_object(request)
+            if self.validate_update_pet_data(request_data):
+                pet = Pet.objects.get(pk=pet_id)
                 pet_serializer = PetSerializer(pet, data=request_data)
                 if pet_serializer.is_valid():
                     pet_serializer.save()
@@ -90,13 +131,11 @@ class PetItemAPI(APIView):
             data = request.data
             pet_item = PetItem.objects.get(id=pet_item_id)
             data['pet'] = pet_item.pet.id
-            print(pet_item)
             pet_item_serializer = PetItemSerializer(pet_item, data=data)
             if pet_item_serializer.is_valid():
                 pet_item_serializer.save()
                 return Response({'response': 'success'}, status=HTTP_200_OK)
             else:
-                print(pet_item_serializer.errors)
                 return Response({'response': pet_item_serializer.errors}, status=HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({'response': str(e)}, status=HTTP_400_BAD_REQUEST)
@@ -148,8 +187,7 @@ class OrderAPI(APIView):
                             'pet_item_id': pet_item_id,
                             'error': 'Out of stock'
                         })
-                except Exception as e:
-                    print(e)
+                except:
                     errors.append({
                         'pet_item_id': pet_item_id,
                         'error': 'Pet item id does not exist'

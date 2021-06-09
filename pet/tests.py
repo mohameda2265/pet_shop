@@ -48,6 +48,10 @@ class PetTest(TestCase):
 
 client = APIClient()
 
+# test get all pets data
+get_pets_request = client.get('/api/pet/', format='json')
+
+# test create pet object with items
 create_pet_obj_success = {
     "name": "test pet",
     "rarity": 5,
@@ -62,11 +66,6 @@ create_pet_obj_success = {
             "currency": "EGP"
         }
     ]
-}
-update_pet_obj_success = {
-    "name": "test pet",
-    "rarity": 5,
-    "quantity": 20
 }
 create_pet_obj_error_data = {
     "name": "test pet",
@@ -98,10 +97,36 @@ create_pet_obj_missing_data = {
         }
     ]
 }
-create_order_success = {
+
+create_pet_request_success = client.post('/api/pet/', create_pet_obj_success, format='json')
+create_pet_request_error_data = client.post('/api/pet/', create_pet_obj_error_data, format='json')
+create_pet_request_missing_data = client.post('/api/pet/', create_pet_obj_missing_data, format='json')
+
+# test update pet object
+update_pet_obj_success = {
+    "name": "test pet",
+    "rarity": 5,
+    "quantity": 20
+}
+update_pet_obj_error_data = {
+    "name": "test pet",
+    "rarity": 5,
+    "quantity": '20'
+}
+update_pet_request_success = client.put('/api/pet/4', update_pet_obj_success, format='json')
+update_pet_request_error_data = client.put('/api/pet/4', update_pet_obj_error_data, format='json')
+
+# test delete pet
+delete_pet_request_success = client.delete('/api/pet/2', format='json')
+
+# test delete pet item
+delete_pet_item_request_success = client.delete('/api/pet/item/2', format='json')
+
+# test create order
+create_order_obj_success = {
     "orders": [
         {
-            "pet_item_id": 2,
+            "pet_item_id": 8,
             "quantity": 1
         },
         {
@@ -115,11 +140,11 @@ create_order_success = {
     ],
     "payment_method": "COD"
 }
-create_order_error_data = {
+create_order_obj_error_data = {
     "orders": [
         {
-            "pet_item_id": 2,
-            "quantity": 1
+            "pet_item_id": '2',
+            "quantity": 0
         },
         {
             "pet_item_id": 1,
@@ -133,17 +158,20 @@ create_order_error_data = {
     "payment_method": "COD"
 }
 
-create_pet_request_success = client.post('/api/pet/', create_pet_obj_success, format='json')
-create_pet_request_error_data = client.post('/api/pet/', create_pet_obj_error_data, format='json')
-create_pet_request_missing_data = client.post('/api/pet/', create_pet_obj_missing_data, format='json')
-update_pet_request_success = client.put('/api/pet/80', update_pet_obj_success, format='json')
-update_pet_request_error_data = client.put('/api/pet/80', update_pet_obj_success, format='json')
-update_pet_request_missing_data = client.put('/api/pet/80', update_pet_obj_success, format='json')
-get_pets_request = client.get('/api/pet/', format='json')
-delete_pet_request_success = client.delete('/api/pet/1', format='json')
-delete_pet_item_request_success = client.delete('/api/pet/item/1', format='json')
-create_order_request_success = client.post('/api/pet/order', create_order_success, format='json')
-create_order_request_error_data = client.post('/api/pet/order', create_order_error_data, format='json')
-update_pet_item_request_success = client.put('/api/pet/80', create_update_pet_obj_success, format='json')
-update_pet_item_error_data = client.put('/api/pet/80', create_update_pet_obj_error_data, format='json')
-update_pet_item_missing_data = client.put('/api/pet/80', create_update_pet_obj_missing_data, format='json')
+create_order_request_success = client.post('/api/pet/order', create_order_obj_success, format='json')
+create_order_request_error_data = client.post('/api/pet/order', create_order_obj_error_data, format='json')
+
+# test update pet item
+update_pet_item_obj_success = {
+    "price": 150,
+    "currency": "Dollar"
+}
+update_pet_item_obj_error_data = {
+    "price": '150',
+    "currency": "Dollar"
+}
+
+update_pet_item_request_success = client.put('/api/pet/item/8', update_pet_item_obj_success, format='json')
+update_pet_item_error_data = client.put('/api/pet/item/8', update_pet_item_obj_error_data, format='json')
+
+
